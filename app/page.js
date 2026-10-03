@@ -1,3 +1,4 @@
+import AuthButton from "./AuthButton";
 import { supabase } from "../lib/supabase";
 import CartLink from "./CartLink";
 import AddToCartButton from "./AddToCartButton";
@@ -45,7 +46,7 @@ export default async function Home() {
             <a href="#" className="hover:text-[#c97b9a]">About</a>
           </nav>
           <div className="flex items-center gap-4 text-sm">
-            <button className="hover:text-[#c97b9a]">Sign in</button>
+            <AuthButton />
             <CartLink />
           </div>
         </div>
