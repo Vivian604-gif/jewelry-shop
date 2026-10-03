@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "../CartContext";
 
@@ -38,9 +39,19 @@ export default function CartPage() {
             <ul className="mt-8 divide-y divide-pink-100">
               {items.map((i) => (
                 <li key={i.id} className="flex items-center gap-4 py-4">
-                  <div className="h-16 w-16 flex-none rounded-xl bg-gradient-to-br from-[#fbeff4] to-[#e9c1d3] flex items-center justify-center text-2xl">
-                    💍
-                  </div>
+                  {i.image_url ? (
+                    <Image
+                      src={i.image_url}
+                      alt={i.name}
+                      width={64}
+                      height={64}
+                      className="h-16 w-16 flex-none rounded-xl object-cover"
+                    />
+                  ) : (
+                    <div className="h-16 w-16 flex-none rounded-xl bg-gradient-to-br from-[#fbeff4] to-[#e9c1d3] flex items-center justify-center text-2xl">
+                      💍
+                    </div>
+                  )}
                   <div className="flex-1">
                     <p className="font-medium">{i.name}</p>
                     <p className="text-sm text-[#a5527a]">${i.price.toLocaleString()}</p>
