@@ -1,16 +1,13 @@
+import { supabase } from "../lib/supabase";
+
+export const revalidate = 60;
+
 const categories = [
   { name: "Necklaces", icon: "📿" },
   { name: "Earrings", icon: "✨" },
   { name: "Rings", icon: "💍" },
   { name: "Bracelets", icon: "🔗" },
   { name: "Pendants", icon: "💎" },
-];
-
-const products = [
-  { name: "Heritage Pearl Necklace", price: 1750 },
-  { name: "Rose Gold Drop Earrings", price: 780 },
-  { name: "Solitaire Promise Ring", price: 450 },
-  { name: "Classic Diamond Bracelet", price: 1250 },
 ];
 
 const perks = [
@@ -20,7 +17,12 @@ const perks = [
   { title: "Customer Support", text: "We are here to help" },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const { data: products, error } = await supabase
+    .from("products")
+    .select("*")
+    .order("id");
+
   return (
     <div className="bg-white text-[#2b1428]">
       {/* Announcement bar */}
@@ -95,15 +97,18 @@ export default function Home() {
         <p className="text-xs text-[#a5527a]">Our bestsellers</p>
         <h2 className="font-serif text-2xl text-[#4a1942]">Handpicked for you</h2>
         <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-5">
-          {products.map((p) => (
-            <div key={p.name} className="rounded-2xl border border-pink-100 p-3">
+          {error && (
+            <p className="col-span-full text-sm text-red-600">Could not load products.</p>
+          )}
+          {(products || []).map((p) => (
+            <div key={p.id} className="rounded-2xl border border-pink-100 p-3">
               <div className="aspect-square rounded-xl bg-gradient-to-br from-[#fbeff4] to-[#e9c1d3] flex items-center justify-center text-5xl">
                 💍
               </div>
               <h3 className="mt-3 text-sm font-medium">{p.name}</h3>
               <p className="text-[#a5527a] text-xs">★★★★★</p>
               <div className="mt-2 flex items-center justify-between">
-                <span className="font-semibold">${p.price.toLocaleString()}</span>
+                <span className="font-semibold">${Number(p.price).toLocaleString()}</span>
                 <button className="rounded-full border border-[#4a1942] px-3 py-1 text-xs text-[#4a1942] hover:bg-[#4a1942] hover:text-white">
                   Add
                 </button>
