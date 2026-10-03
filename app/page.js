@@ -1,7 +1,9 @@
-import AuthButton from "./AuthButton";
+import Image from "next/image";
 import { supabase } from "../lib/supabase";
 import CartLink from "./CartLink";
 import AddToCartButton from "./AddToCartButton";
+import AuthButton from "./AuthButton";
+
 export const revalidate = 60;
 
 const categories = [
@@ -102,14 +104,31 @@ export default async function Home() {
           )}
           {(products || []).map((p) => (
             <div key={p.id} className="rounded-2xl border border-pink-100 p-3">
-              <div className="aspect-square rounded-xl bg-gradient-to-br from-[#fbeff4] to-[#e9c1d3] flex items-center justify-center text-5xl">
-                💍
+              <div className="relative aspect-square overflow-hidden rounded-xl bg-gradient-to-br from-[#fbeff4] to-[#e9c1d3] flex items-center justify-center text-5xl">
+                {p.image_url ? (
+                  <Image
+                    src={p.image_url}
+                    alt={p.name}
+                    fill
+                    sizes="(min-width: 768px) 25vw, 50vw"
+                    className="object-cover"
+                  />
+                ) : (
+                  "💍"
+                )}
               </div>
               <h3 className="mt-3 text-sm font-medium">{p.name}</h3>
               <p className="text-[#a5527a] text-xs">★★★★★</p>
               <div className="mt-2 flex items-center justify-between">
                 <span className="font-semibold">${Number(p.price).toLocaleString()}</span>
-                <AddToCartButton product={{ id: p.id, name: p.name, price: Number(p.price) }} />
+                <AddToCartButton
+                  product={{
+                    id: p.id,
+                    name: p.name,
+                    price: Number(p.price),
+                    image_url: p.image_url,
+                  }}
+                />
               </div>
             </div>
           ))}
