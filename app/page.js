@@ -1,5 +1,6 @@
 import { supabase } from "../lib/supabase";
-
+import CartLink from "./CartLink";
+import AddToCartButton from "./AddToCartButton";
 export const revalidate = 60;
 
 const categories = [
@@ -45,9 +46,7 @@ export default async function Home() {
           </nav>
           <div className="flex items-center gap-4 text-sm">
             <button className="hover:text-[#c97b9a]">Sign in</button>
-            <button className="rounded-full bg-[#4a1942] px-4 py-2 text-white hover:bg-[#6b2a5f]">
-              Cart (0)
-            </button>
+            <CartLink />
           </div>
         </div>
       </header>
@@ -109,9 +108,7 @@ export default async function Home() {
               <p className="text-[#a5527a] text-xs">★★★★★</p>
               <div className="mt-2 flex items-center justify-between">
                 <span className="font-semibold">${Number(p.price).toLocaleString()}</span>
-                <button className="rounded-full border border-[#4a1942] px-3 py-1 text-xs text-[#4a1942] hover:bg-[#4a1942] hover:text-white">
-                  Add
-                </button>
+                <AddToCartButton product={{ id: p.id, name: p.name, price: Number(p.price) }} />
               </div>
             </div>
           ))}
