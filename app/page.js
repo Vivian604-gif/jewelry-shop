@@ -6,12 +6,12 @@ import AuthButton from "./AuthButton";
 
 export const revalidate = 60;
 
-const categories = [
-  { name: "Necklaces", icon: "📿" },
-  { name: "Earrings", icon: "✨" },
-  { name: "Rings", icon: "💍" },
-  { name: "Bracelets", icon: "🔗" },
-  { name: "Pendants", icon: "💎" },
+ const categories = [
+  { name: "Necklaces", image: "/images/pearl-necklace.jpg" },
+  { name: "Earrings", image: "/images/rose-gold-earrings.jpg" },
+  { name: "Rings", image: "/images/solitaire-ring.jpg" },
+  { name: "Bracelets", image: "/images/diamond-bracelet.jpg" },
+  { name: "Pendants", image: "/images/moon-pendant.jpg" },
 ];
 
 const perks = [
@@ -73,9 +73,16 @@ export default async function Home() {
               Explore collections
             </a>
           </div>
-          <div className="aspect-[4/3] rounded-3xl bg-gradient-to-tr from-[#d9a0bb] to-[#fbeff4] flex items-center justify-center text-8xl shadow-xl">
-            💎
-          </div>
+          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-xl">
+  <Image
+    src="/images/hero.jpg"
+    alt="Lumière jewelry collection"
+    fill
+    priority
+    sizes="(min-width: 768px) 50vw, 100vw"
+    className="object-cover"
+  />
+</div>
         </div>
       </section>
 
@@ -84,13 +91,14 @@ export default async function Home() {
         <h2 className="font-serif text-2xl text-[#4a1942]">Find your perfect piece</h2>
         <div className="mt-8 flex flex-wrap justify-between gap-6">
           {categories.map((c) => (
-            <a key={c.name} href="#products" className="group text-center">
-              <div className="h-24 w-24 md:h-28 md:w-28 rounded-full bg-gradient-to-br from-[#f6e0ea] to-[#d9a0bb] flex items-center justify-center text-4xl group-hover:scale-105 transition">
-                {c.icon}
-              </div>
-              <p className="mt-3 text-sm font-medium">{c.name}</p>
-            </a>
-          ))}
+  <a key={c.name} href="#products" className="group text-center">
+    <div className="relative h-24 w-24 md:h-28 md:w-28 overflow-hidden rounded-full bg-gradient-to-br from-[#f6e0ea] to-[#d9a0bb] group-hover:scale-105 transition">
+      <Image src={c.image} alt={c.name} fill sizes="112px" className="object-cover" />
+    </div>
+    <p className="mt-3 text-sm font-medium">{c.name}</p>
+  </a>
+))}
+
         </div>
       </section>
 
